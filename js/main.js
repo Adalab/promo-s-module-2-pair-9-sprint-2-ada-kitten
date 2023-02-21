@@ -36,8 +36,52 @@ const kittenData_3 = {
     desc: " Tienen la cabeza cuadrada y los ojos simétricos, por lo que su bella mirada se ha convertido en una de sus señas de identidad. Sus ojos son grandes y las orejas resultan largas y en punta.",
     race: "Maine Coon",
 };
+ let kittenDataList = [];
 
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
+ //FETCH
+const GITHUB_USER = 'Cristina-F-R';
+const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
+const kittenListStored = JSON.parse(localStorage.getItem('kittensList'));
+
+
+if (kittenListStored) {
+    console.log('tengo storage');
+ kittenDataList = kittenListStored;
+  renderKittenList(kittenDataList);
+} else {
+  console.log('hago fetch');
+  fetch(SERVER_URL)
+    .then((response) => response.json())
+    .then((data) =>{
+        kittenDataList = data.results.map((kittens) => ({
+            image: kittens.image,
+            name: kittens.name,
+            race:  kittens.race,
+            desc: kittens.desc
+        }))
+        localStorage.setItem('kittensList', JSON.stringify(kittenDataList));
+        renderKittenList(kittenDataList);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+
+fetch(SERVER_URL, {
+    method: 'GET',
+    header8s: {'Content-Type': 'application/json'},
+    })
+    .then((response) => response.json())
+    .then((data) =>{
+        kittenDataList = data.results.map((kittens) => ({
+            image: kittens.image,
+            name: kittens.name,
+            race:  kittens.race,
+            desc: kittens.desc
+        }))
+        renderKittenList(kittenDataList);
+    });
 
 //Funciones
 function renderKitten(kittenData) {
@@ -92,7 +136,6 @@ function cancelNewKitten(event) {
 }
 
 //Filtrar por descripción
-
 function filterKitten(event) {
     event.preventDefault();
     const descrSearchText = input_search_desc.value.toLowerCase();
@@ -133,7 +176,7 @@ function addNewKitten(event) {
     
 }
 //Mostrar el litado de gatitos en ell HTML
-renderKittenList(kittenDataList);
+// renderKittenList(kittenDataList);
 
 
 //Eventos
