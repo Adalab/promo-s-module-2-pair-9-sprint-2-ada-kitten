@@ -148,33 +148,86 @@ function filterKitten(event) {
 
 
 //Adicionar nuevo gatito
-function addNewKitten(event) {
-    event.preventDefault();
-    const valueDesc = inputDesc.value;
-    const valuePhoto = inputPhoto.value;
-    const valueName = inputName.value;
-    const valueRace = inputRace.value;
-    const newKittenDataObject = {
-        image: valuePhoto,
-        name: valueName,
-        desc: valueDesc,
-        race: valueRace,
-    };
-    if (valueDesc === "" || valuePhoto === "" || valueName === "") {
-        labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
-    } else {
-        if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
-            labelMessageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
-            kittenDataList.push(newKittenDataObject);
-            inputDesc.value = "";
-            inputPhoto.value = "";
-            inputName.value = "";
-            inputRace.value = "";
-            renderKittenList(kittenDataList);
-        }
-    }
-    
+
+function resetInputs() {
+  inputDesc.value = "";
+  inputName.value = "";
+  inputPhoto.value = "";
+  inputRace.value = "";
+  labelMessageError.innerHTML = "";
 }
+
+function addNewKitten(event) {
+  event.preventDefault();
+  const valueDesc = inputDesc.value;
+  const valuePhoto = inputPhoto.value;
+  const valueName = inputName.value;
+
+
+  if (valueDesc === "" || valuePhoto === "" || valueName === "") {
+    labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
+  } else if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
+    labelMessageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
+    let newKittenDataObject = {
+      image: valuePhoto,
+      name: valueName,
+      desc: valueDesc,
+      race: "",
+    };
+
+    fetch(SERVER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newKittenDataObject),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          kittenDataList.push(newKittenDataObject);
+          kittenListStored = localStorage.setItem(
+            "kittenDataList",
+            JSON.stringify(kittenDataList)
+          );
+
+          renderKittenList(kittenDataList);
+        } else {
+          console.error(error);
+        }
+      });
+    resetInputs();
+  }
+}
+
+
+// function addNewKitten(event) {
+//     event.preventDefault();
+//     const valueDesc = inputDesc.value;
+//     const valuePhoto = inputPhoto.value;
+//     const valueName = inputName.value;
+//     const valueRace = inputRace.value;
+//     const newKittenDataObject = {
+//         image: valuePhoto,
+//         name: valueName,
+//         desc: valueDesc,
+//         race: valueRace,
+//     };
+//     if (valueDesc === "" || valuePhoto === "" || valueName === "") {
+//         labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
+//     } else {
+//         if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
+//             labelMessageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
+//             kittenDataList.push(newKittenDataObject);
+//             inputDesc.value = "";
+//             inputPhoto.value = "";
+//             inputName.value = "";
+//             inputRace.value = "";
+//             renderKittenList(kittenDataList);
+//         }
+//     }
+    
+// }
+
+
 //Mostrar el litado de gatitos en ell HTML
 // renderKittenList(kittenDataList);
 
