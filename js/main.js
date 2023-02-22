@@ -206,13 +206,13 @@ function addNewKitten(event) {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.success) {
           kittenDataList.push(newKittenDataObject);
-          kittenListStored = localStorage.setItem(
+          localStorage.setItem(
             "kittenDataList",
             JSON.stringify(kittenDataList)
           );
-
           renderKittenList(kittenDataList);
         } else {
           console.error(error);
