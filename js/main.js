@@ -39,23 +39,46 @@ const kittenData_3 = {
  let kittenDataList = [];
 
 //Funciones
-function renderKitten(kittenData) {
-    const kitten = `<li class="card">
-    <article>
-      <img
-        class="card_img"
-        src=${kittenData.image}
-        alt="gatito"
-      />
-      <h3 class="card_title">${kittenData.name}</h3>
-      <h3 class="card_race">${kittenData.race}</h3>
-      <p class="card_description">
-      ${kittenData.desc}
-      </p>
-    </article>
-    </li>`;
-    return kitten;
-}
+// function renderKitten(kittenData) {
+//     for (const kittenData of kittenDataList) {
+    
+//     const liElement = document.createElement('li');
+//     liElement.setAttribute('class', 'card')
+    
+//     const articleElement = document.createElement('article');
+
+//     const imgElement = document.createElement('img');
+//     imgElement.setAttribute('class', 'card_img');
+//     imgElement.setAttribute('src', kittenData.image);
+//     imgElement.setAttribute('alt', 'gatito');
+    
+//     const h3NameElement = document.createElement('h3');
+//     const h3RaceElement = document.createElement('h3');
+//     const pElement = document.createElement('p');
+
+
+//     articleElement.appendChild(pElement);
+//     articleElement.appendChild(h3RaceElement);
+//     articleElement.appendChild(h3NameElement);
+//     articleElement.appendChild(imgElement);
+//     liElement.appendChild(articleElement);
+//     listElement.appendChild(liElement);  }
+//     `<li class="card">
+//     <article>
+//       <img
+//         class="card_img"
+//         src=${kittenData.image}
+//         alt="gatito"
+//       />
+//       <h3 class="card_title">${kittenData.name}</h3>
+//       <h3 class="card_race">${kittenData.race}</h3>
+//       <p class="card_description">
+//       ${kittenData.desc}
+//       </p>
+//     </article>
+//     </li>`;
+//     return kitten;
+// }
 
 function renderKittenList(kittenDataList) {
     listElement.innerHTML = "";
@@ -103,33 +126,8 @@ function filterKitten(event) {
 
 
 //Adicionar nuevo gatito
-// function addNewKitten(event) {
-//     event.preventDefault();
-//     const valueDesc = inputDesc.value;
-//     const valuePhoto = inputPhoto.value;
-//     const valueName = inputName.value;
-//     const valueRace = inputRace.value;
-//     const newKittenDataObject = {
-//         image: valuePhoto,
-//         name: valueName,
-//         desc: valueDesc,
-//         race: valueRace,
-//     };
-//     if (valueDesc === "" || valuePhoto === "" || valueName === "") {
-//         labelMessageError.innerHTML = "¡Uy! parece que has olvidado algo";
-//     } else {
-//         if (valueDesc !== "" && valuePhoto !== "" && valueName !== "") {
-//             labelMessageError.innerHTML = "Mola! Un nuevo gatito en Adalab!";
-//             kittenDataList.push(newKittenDataObject);
-//             inputDesc.value = "";
-//             inputPhoto.value = "";
-//             inputName.value = "";
-//             inputRace.value = "";
-//             renderKittenList(kittenDataList);
-//         }
-//     }
+//FETCH
 
- //FETCH
 const GITHUB_USER = 'Cristina-F-R';
 const SERVER_URL = `https://dev.adalab.es/api/kittens/${GITHUB_USER}`;
 const kittenListStored = JSON.parse(localStorage.getItem('kittensList'));
@@ -221,8 +219,7 @@ function addNewKitten(event) {
     resetInputs();
   }
 }
-
-    
+  
 
 //Mostrar el litado de gatitos en ell HTML
 // renderKittenList(kittenDataList);
